@@ -11,6 +11,10 @@ public class Player : BasePlayer
     private Player targetPlayer;
     private Action onSlideComplete;
     [SerializeField] private HealthBar healthBar;
+    [SerializeField] Transform spriteRendererTransform;
+    [SerializeField] Animator animator;
+
+    private SpriteRenderer spriteRenderer;
     private int dame = 20;
     private bool isDead = false;
     private int health = 100;
@@ -26,7 +30,12 @@ public class Player : BasePlayer
     {
         state = State.Idle;
         startingPosition = transform.position;
+        spriteRenderer = spriteRendererTransform.GetComponent<SpriteRenderer>();
+    }
 
+    public SpriteRenderer GetSpriteRenderer()
+    {
+        return spriteRenderer;
     }
 
     // Update is called once per frame
@@ -34,11 +43,12 @@ public class Player : BasePlayer
     {
         if(state == State.Sliding) {
             float slideSpeed = 5f;
-            transform.position += (targetPosition - transform.position) * slideSpeed * Time.deltaTime;
+            transform.position += (targetPosition - startingPosition) * slideSpeed * 0.001f;
 
-            float reachedDistance = 1f;
+            float reachedDistance = 10f;
             if (Vector3.Distance(transform.position, targetPosition) < reachedDistance)
             {
+                animator.SetFloat("Speed", 0);
                 onSlideComplete();
             }
         }
@@ -48,12 +58,17 @@ public class Player : BasePlayer
     {
         slideToPosition(targetPosition, () =>
         {
+            animator.SetBool("isAttack", true);
+
             //do attack animation and deal dame
-            slideToPosition(startingPosition, () =>
-            {
-                state = State.Idle;
-                onAttackComplete(dame);
-            });
+            animator.SetBool("isAttack", false);
+
+            //slideToPosition(startingPosition, () =>
+            //{
+            //    state = State.Idle;
+            //    onAttackComplete(dame);
+            //    animator.SetFloat("Speed", 0);
+            //});
         });
     }
 
@@ -69,6 +84,6 @@ public class Player : BasePlayer
         this.targetPosition = targetPosition;
         this.onSlideComplete = onSlideComplete;
         state = State.Sliding;
-
+        animator.SetFloat("Speed", 1);
     }
 }

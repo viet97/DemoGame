@@ -1,30 +1,20 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scrips/Player.cs">
+﻿<Properties StartupConfiguration="{3AE34CF6-602F-DEB2-6D8E-3F81C9717B56}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scrips/GameHandler.cs">
     <Files>
-      <File FileName="Assets/Scrips/Player.cs" Line="62" Column="24" />
-      <File FileName="Assets/Scrips/GameHandler.cs" Line="35" Column="21" />
-      <File FileName="Assets/TurnBattleSystem/Scripts/BattleHandler.cs" Line="92" Column="40" />
-      <File FileName="Assets/TurnBattleSystem/Scripts/CharacterBattle.cs" Line="13" Column="1" />
+      <File FileName="Assets/Scrips/Player.cs" Line="32" Column="6" />
+      <File FileName="Assets/Scrips/GameHandler.cs" Line="23" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="DemoGame" expanded="True">
-            <Node name="Assembly-CSharp" expanded="True">
-              <Node name="Assets" expanded="True">
-                <Node name="Scrips" expanded="True">
-                  <Node name="Player.cs" selected="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
+          <Node name="DemoGame" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="9a2d8495-9cb4-42e5-b622-43b8de858efd" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f2f61a47-29a7-4baf-b1cc-089de5294ab8" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

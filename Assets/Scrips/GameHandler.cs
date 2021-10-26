@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameHandler : MonoBehaviour
 {
     [SerializeField] Transform playerTransform;
+    [SerializeField] Transform enemyTransform;
     private Player player1;
     private Player player2;
     private State state;
@@ -17,9 +18,8 @@ public class GameHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player1 = Instantiate(playerTransform, new Vector3(-8, 0), Quaternion.identity).GetComponent<Player>();
-        player2 = Instantiate(playerTransform, new Vector3(8, 0), Quaternion.identity).GetComponent<Player>();
-        state = State.WaitingForPlayer;
+        player1 = Instantiate(playerTransform, new Vector3(300, 200), Quaternion.identity).GetComponent<Player>();
+        player2 = Instantiate(enemyTransform, new Vector3(1100, 200), Quaternion.identity).GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class GameHandler : MonoBehaviour
     {
         if (state == State.Busy) return;
         state = State.Busy;
-        player1.Attack(player2.transform.position,(int dame)=> {
+        player1.Attack(player2.transform.position - new Vector3(100,0),(int dame)=> {
             state = State.WaitingForPlayer;
             player2.Damage(dame);
         });
