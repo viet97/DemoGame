@@ -1,13 +1,22 @@
-﻿<Properties StartupConfiguration="{3AE34CF6-602F-DEB2-6D8E-3F81C9717B56}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scrips/GameHandler.cs">
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scrips/Player.cs">
     <Files>
-      <File FileName="Assets/Scrips/Player.cs" Line="32" Column="6" />
-      <File FileName="Assets/Scrips/GameHandler.cs" Line="23" Column="6" />
+      <File FileName="Assets/Scrips/HealthBar.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scrips/Player.cs" Line="71" Column="14" />
+      <File FileName="Assets/Scrips/GameHandler.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="DemoGame" expanded="True" selected="True" />
+          <Node name="DemoGame" expanded="True">
+            <Node name="Assembly-CSharp" expanded="True">
+              <Node name="Assets" expanded="True">
+                <Node name="Scrips" expanded="True">
+                  <Node name="Player.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>

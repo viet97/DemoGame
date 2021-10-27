@@ -32,9 +32,17 @@ public class GameHandler : MonoBehaviour
     {
         if (state == State.Busy) return;
         state = State.Busy;
-        player1.Attack(player2.transform.position - new Vector3(100,0),(int dame)=> {
+        player1.Attack(player2,player2.transform.position - new Vector3(100,0),"isAttack",()=> {
             state = State.WaitingForPlayer;
-            player2.Damage(dame);
+        });
+    }
+
+    public void OnFlyKickPress()
+    {
+        if (state == State.Busy) return;
+        state = State.Busy;
+        player1.Attack(player2, player2.transform.position - new Vector3(100, 0), "isFlyKick",() => {
+            state = State.WaitingForPlayer;
         });
     }
 }

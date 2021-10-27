@@ -10,11 +10,12 @@ public class Player : BasePlayer
     private Vector3 startingPosition;
     private Player targetPlayer;
     private Action onSlideComplete;
+    private Action onAttackComplete;
     [SerializeField] private HealthBar healthBar;
     [SerializeField] Transform spriteRendererTransform;
     [SerializeField] Animator animator;
-
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    private String attackTypeBoolString;
     private int dame = 20;
     private bool isDead = false;
     private int health = 100;
@@ -22,6 +23,7 @@ public class Player : BasePlayer
     {
         Idle,
         Sliding,
+        Attacking,
         Busy,
     }
 
@@ -30,48 +32,77 @@ public class Player : BasePlayer
     {
         state = State.Idle;
         startingPosition = transform.position;
-        spriteRenderer = spriteRendererTransform.GetComponent<SpriteRenderer>();
     }
 
     public SpriteRenderer GetSpriteRenderer()
     {
         return spriteRenderer;
     }
+    public Animator GetAnimator()
+    {
+        return animator;
+    }
 
     // Update is called once per frame
     void Update()
     {
         if(state == State.Sliding) {
-            float slideSpeed = 5f;
-            transform.position += (targetPosition - startingPosition) * slideSpeed * 0.001f;
-
             float reachedDistance = 10f;
             if (Vector3.Distance(transform.position, targetPosition) < reachedDistance)
             {
+                //stand and attack
                 animator.SetFloat("Speed", 0);
                 onSlideComplete();
+                onSlideComplete = null;
+                return;
             }
+            float slideSpeed = 5f;
+            transform.position += (targetPosition - startingPosition) * slideSpeed * 0.003f;
         }
     }
 
-    public void Attack(Vector3 targetPosition, Action<int> onAttackComplete)
+    public void Attack(Player targetPlayer, Vector3 targetPosition,String attackTypeBoolString, Action onAttackComplete)
     {
+        this.attackTypeBoolString = attackTypeBoolString;
+        this.onAttackComplete = onAttackComplete;
+        this.targetPlayer = targetPlayer;
+        Debug.Log("Attack" + targetPosition.x +" " + startingPosition);
         slideToPosition(targetPosition, () =>
         {
-            animator.SetBool("isAttack", true);
-
-            //do attack animation and deal dame
-            animator.SetBool("isAttack", false);
-
-            //slideToPosition(startingPosition, () =>
-            //{
-            //    state = State.Idle;
-            //    onAttackComplete(dame);
-            //    animator.SetFloat("Speed", 0);
-            //});
+            //do attack
+            if (!animator.GetBool(this.attackTypeBoolString))
+            {
+                animator.SetBool(this.attackTypeBoolString, true);
+            }
         });
     }
-
+    private void Attacking()
+    {
+        //deal dame to target
+        targetPlayer.Damage(dame);
+        //make target player hurt
+        targetPlayer.GetAnimator().SetBool("isHurt", true);
+    }
+    private void AttackFinish()
+    {
+        Debug.Log("AttackFinish");
+        animator.SetBool(this.attackTypeBoolString, false);
+        //move back after attack finish
+        Vector3 newTargetPosition = startingPosition;
+        spriteRenderer.flipX = true;
+        slideToPosition(newTargetPosition, () =>
+        {
+            spriteRenderer.flipX = false;
+            state = State.Idle;
+            //attack complete
+            this.onAttackComplete();
+        });
+    }
+    private void HurtFinish()
+    {
+        Debug.Log("Hurt finish");
+        GetAnimator().SetBool("isHurt", false);
+    }
     public void Damage(int dame)
     {
         health -= dame;
@@ -81,6 +112,7 @@ public class Player : BasePlayer
 
     void slideToPosition(Vector3 targetPosition,Action onSlideComplete)
     {
+        startingPosition = transform.position;
         this.targetPosition = targetPosition;
         this.onSlideComplete = onSlideComplete;
         state = State.Sliding;

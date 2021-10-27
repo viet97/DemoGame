@@ -296,6 +296,7 @@ MonoBehaviour:
   healthBar: {fileID: 7022819624585755530}
   spriteRendererTransform: {fileID: 0}
   animator: {fileID: 8113455234618199529}
+  spriteRenderer: {fileID: 8113455234618199528}
 --- !u!212 &8113455234618199528
 SpriteRenderer:
   m_ObjectHideFlags: 0
